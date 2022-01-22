@@ -8,6 +8,8 @@ const helmet = require("helmet");
 const app = express();
 const port = 3000 || process.env.PORT;
 
+const authRouter = require("./routes/authRoute");
+
 // Security
 app.use(helmet());
 app.use(bodyParser.json());

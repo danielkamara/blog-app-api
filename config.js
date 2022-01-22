@@ -12,4 +12,4 @@ async function main() {
 }
 
 module.exports = main;
-config.js;
+// config.js;
