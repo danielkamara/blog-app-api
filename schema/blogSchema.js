@@ -7,6 +7,6 @@ const blogSchema = new mongoose.Schema({
   blog_content: { type: String, required: true },
 });
 
-const blog = mongoose.model("Blog", blogSchema);
+const blogModel = mongoose.model("Blog", blogSchema);
 
-module.exports = blog;
+module.exports = blogModel;

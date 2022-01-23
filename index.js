@@ -9,6 +9,7 @@ const app = express();
 const port = 3000 || process.env.PORT;
 
 const authRouter = require("./routes/authRoute");
+const blogRoute = require("./routes/blogRoute");
 
 // Security
 app.use(helmet());
@@ -19,6 +20,7 @@ dotenv.config();
 app.use(morgan("dev"));
 
 app.use("/auth", authRouter);
+app.use("/blog", blogRoute);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Base Route is up" });
