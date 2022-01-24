@@ -8,7 +8,7 @@ const helmet = require("helmet");
 const app = express();
 const port = 3000 || process.env.PORT;
 
-const authRouter = require("./routes/authRoute");
+const authRoute = require("./routes/authRoute");
 const blogRoute = require("./routes/blogRoute");
 
 // Security
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 dotenv.config();
 app.use(morgan("dev"));
 
-app.use("/auth", authRouter);
+app.use("/auth", authRoute);
 app.use("/blog", blogRoute);
 
 app.get("/", (req, res) => {
