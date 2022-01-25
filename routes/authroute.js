@@ -1,21 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../schema/userSchema");
-const authenticateToken = require("../middleware/jwt");
 
 const authRouter = express.Router();
 
-authRouter.get("/", authenticateToken, (req, res) => {
-  User.find((error, result) => {
-    if (error) {
-      res.status(400).json({ message: error.message });
-    }
-    if (result === null || result === undefined || result === []) {
-      res.status(404).json({ message: "User Not Found" });
-    }
-    res.status(200).json({ data: result });
-  });
-});
+// const authenticateToken = require("../middleware/jwt");
 
 authRouter.post("/register", async (req, res) => {
   let user = req.body;
@@ -36,6 +25,18 @@ authRouter.post("/register", async (req, res) => {
     res.status(200).json({ data: result });
   });
 });
+
+// authRouter.get("/", authenticateToken, (req, res) => {
+//   User.find((error, result) => {
+//     if (error) {
+//       res.status(400).json({ message: error.message });
+//     }
+//     if (result === null || result === undefined || result === []) {
+//       res.status(404).json({ message: "User Not Found" });
+//     }
+//     res.status(200).json({ data: result });
+//   });
+// });
 
 authRouter.post("/login", (req, res) => {
   let username = req.body.username;

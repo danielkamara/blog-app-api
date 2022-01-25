@@ -40,7 +40,7 @@ blogRoute.get("/:id", jwt.authenticateToken, (req, res) => {
   });
 });
 
-blogRoute.put("/:id", jwt.authenticateToken, (req, res) => {
+blogRoute.put("/:id", verifyJWT, (req, res) => {
   // update specific Blog
   let id = req.params.id;
   Blog.findByIdAndUpdate(id, newBlog, (err, blog) => {
