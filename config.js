@@ -1,5 +1,3 @@
-require("dotenv").config();
-const { config } = require("dotenv");
 const mongoose = require("mongoose");
 
 async function main() {
@@ -11,5 +9,7 @@ async function main() {
   });
 }
 
+require("dotenv").config();
+const { config } = require("dotenv");
+
 module.exports = main;
-// config.js;

@@ -5,7 +5,7 @@ function generateAccessToken(username) {
 }
 
 function authenticateToken(req, res, next) {
-  const token = req.get("Auth");
+  const token = req.get("Authorization");
 
   if (token === null) {
     res.status(403).json({ message: "Token Required" });

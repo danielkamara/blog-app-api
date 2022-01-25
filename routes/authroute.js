@@ -3,9 +3,9 @@ const bcrypt = require("bcrypt");
 const User = require("../schema/userSchema");
 const authenticateToken = require("../middleware/jwt");
 
-const authRoute = express.Router();
+const authRouter = express.Router();
 
-authRoute.get("/", authenticateToken, (req, res) => {
+authRouter.get("/", authenticateToken, (req, res) => {
   User.find((error, result) => {
     if (error) {
       res.status(400).json({ message: error.message });
@@ -17,7 +17,7 @@ authRoute.get("/", authenticateToken, (req, res) => {
   });
 });
 
-authRoute.post("/register", async (req, res) => {
+authRouter.post("/register", async (req, res) => {
   let user = req.body;
   let password = user.password;
   let salt = Number(process.env.SALT);
@@ -37,7 +37,7 @@ authRoute.post("/register", async (req, res) => {
   });
 });
 
-authRoute.post("/login", (req, res) => {
+authRouter.post("/login", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
   if (!password || !username) {
