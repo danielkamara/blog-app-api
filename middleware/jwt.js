@@ -1,5 +1,9 @@
 const jwt = require("jsonwebtoken");
 
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.JWT_SECRET, { expiresIn: "1900s" });
+}
+
 function verifyJWT(req, res, next) {
   let token = req.get("Authorization");
 
@@ -9,7 +13,7 @@ function verifyJWT(req, res, next) {
 
   jwt.verify(token, process.env.JWT_SECRET, (error, result) => {
     if (error) {
-      res.status(400).json({ message: "Ya done goofed" });
+      res.status(400).json({ message: "Token Required" });
     }
 
     if (result === false) {
@@ -19,4 +23,4 @@ function verifyJWT(req, res, next) {
   });
 }
 
-module.exports = verifyJWT;
+module.exports = { generateAccessToken, verifyJWT };

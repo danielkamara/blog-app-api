@@ -1,12 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
-const verifyJWT = require("../middleware/jwt");
+const createToken = require("jsonwebtoken");
+const jwt = require("../middleware/jwt");
 
 const authRouter = express.Router();
-
-// const authenticateToken = require("../middleware/jwt");
 
 authRouter.post("/register", async (req, res) => {
   let user = req.body;
@@ -47,14 +45,14 @@ authRouter.post("/login", (req, res) => {
           .status(403)
           .json({ message: "Either username or password is incorrect" });
       }
-      let token = jwt.sign(username, process.env.JWT_SECRET);
+      let token = createToken.sign(username, process.env.JWT_SECRET);
       res.setHeader("Authorization", token);
       res.status(200).json({ data: result });
     });
   });
 });
 
-authRouter.get("/", verifyJWT, (req, res) => {
+authRouter.get("/", jwt.verifyJWT, (req, res) => {
   User.find((error, result) => {
     if (error) {
       res.status(400).json({ message: error.message });

@@ -10,7 +10,7 @@ const morgan = require("morgan");
 
 const mongoConnection = require("./config");
 const authRouter = require("./routes/authRoute");
-// const blogRoute = require("./routes/blogRoute");
+const blogRoute = require("./routes/blogRoute");
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 app.use("/auth", authRouter);
-// app.use("/blog", blogRoute);
+app.use("/blog", blogRoute);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Base Route is up" });
