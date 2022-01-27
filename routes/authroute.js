@@ -6,6 +6,18 @@ const jwt = require("../middleware/jwt");
 
 const authRouter = express.Router();
 
+authRouter.get("/", jwt.verifyJWT, (req, res) => {
+  User.find((error, result) => {
+    if (error) {
+      res.status(400).json({ message: error.message });
+    }
+    if (result === null || result === undefined || result === []) {
+      res.status(404).json({ message: "User Not Found" });
+    }
+    res.status(200).json({ data: result });
+  });
+});
+
 authRouter.post("/register", async (req, res) => {
   let user = req.body;
   let password = user.password;
@@ -49,18 +61,6 @@ authRouter.post("/login", (req, res) => {
       res.setHeader("Authorization", token);
       res.status(200).json({ data: result });
     });
-  });
-});
-
-authRouter.get("/", jwt.verifyJWT, (req, res) => {
-  User.find((error, result) => {
-    if (error) {
-      res.status(400).json({ message: error.message });
-    }
-    if (result === null || result === undefined || result === []) {
-      res.status(404).json({ message: "User Not Found" });
-    }
-    res.status(200).json({ data: result });
   });
 });
 

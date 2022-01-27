@@ -13,6 +13,17 @@ blogRoute.get("/", jwt.verifyJWT, (req, res) => {
   });
 });
 
+blogRoute.get("/:id", jwt.verifyJWT, (req, res) => {
+  // get specific Blog
+  let id = req.params.id;
+  Blog.findById(id, (err, blog) => {
+    if (err) {
+      res.status(400).json({ message: err.message });
+    }
+    res.status(200).json({ message: blog });
+  });
+});
+
 blogRoute.post("/:username", jwt.verifyJWT, (req, res) => {
   let newBlogPost = {
     created_by: req.params.username,
@@ -23,17 +34,6 @@ blogRoute.post("/:username", jwt.verifyJWT, (req, res) => {
   };
 
   Blog.create(newBlogPost, (err, blog) => {
-    if (err) {
-      res.status(400).json({ message: err.message });
-    }
-    res.status(200).json({ message: blog });
-  });
-});
-
-blogRoute.get("/:id", jwt.verifyJWT, (req, res) => {
-  // get specific Blog
-  let id = req.params.id;
-  Blog.findById(id, (err, blog) => {
     if (err) {
       res.status(400).json({ message: err.message });
     }
