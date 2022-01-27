@@ -4,8 +4,19 @@ const Blog = require("../schema/blogSchema");
 
 const blogRoute = express.Router();
 
+// Read Only - Non private Blogs
+
 blogRoute.get("/", jwt.verifyJWT, (req, res) => {
   Blog.find({ private: false }, (err, blogs) => {
+    if (err) {
+      res.status(400).json({ message: err.message });
+    }
+    res.status(200).json({ message: blogs });
+  });
+});
+
+blogRoute.get("/private", jwt.verifyJWT, (req, res) => {
+  Blog.find({ private: true }, (err, blogs) => {
     if (err) {
       res.status(400).json({ message: err.message });
     }
