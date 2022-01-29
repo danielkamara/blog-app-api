@@ -1,31 +1,44 @@
 module.exports = {
-  openapi: "3.0.0",
+  openapi: "3.0.3",
   info: {
     title: "Blog Api",
     description: "Dan's Blog API",
     version: "0.1.9",
   },
   paths: {
-    "/users": {
+    "/user": {
       get: {
-        summary: "Gets all users",
-      },
-    },
-    "/auth/register": {
-      post: {
-        summary: "Register a user",
+        summary: "Get  all users",
+
         parameters: [
           {
-            name: "newUser",
-            in: "body",
-            schema: {},
-            required: true,
-            description: "registers a user",
+            username: {
+              type: "string",
+            },
+            password: {
+              type: "string",
+            },
+            email: {
+              type: "string",
+            },
           },
-        ],
+        ], // expected params.
+        // expected responses
+        responses: {
+          // response code
+          200: {
+            description: "We have users!", // response desc.
+            content: {},
+          },
+        },
       },
     },
-    "/auth/login": {
+    "/user/register": {
+      post: {
+        summary: "Register a user",
+      },
+    },
+    "/user/login": {
       post: {
         summary: "Login a user",
       },

@@ -10,13 +10,13 @@ const swaggerUI = require("swagger-ui-express");
 // Local Requirements
 
 const mongoConnection = require("./config");
-const authRouter = require("./routes/authRoute");
+const userRouter = require("./routes/userRoute");
 const blogRoute = require("./routes/blogRoute");
 const swaggerRoute = require("./docs/swagger");
 dotenv.config();
 
 const app = express();
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 
 // Security
 app.use(helmet());
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 // Security
 app.use(morgan("dev"));
 
-app.use("/auth", authRouter);
+app.use("/user", userRouter);
 app.use("/blog", blogRoute);
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerRoute));
 

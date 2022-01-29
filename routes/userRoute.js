@@ -1,12 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../schema/userSchema");
-// const createToken = require("jsonwebtoken");
 const jwt = require("../middleware/jwt");
 
-const authRouter = express.Router();
+const userRouter = express.Router();
 
-authRouter.get("/", jwt.verifyJWT, (req, res) => {
+userRouter.get("/", jwt.verifyJWT, (req, res) => {
   User.find((error, result) => {
     if (error) {
       res.status(400).json({ message: error.message });
@@ -18,7 +17,7 @@ authRouter.get("/", jwt.verifyJWT, (req, res) => {
   });
 });
 
-authRouter.post("/register", async (req, res) => {
+userRouter.post("/register", async (req, res) => {
   let user = req.body;
   let password = user.password;
   let username = user.username;
@@ -46,7 +45,7 @@ authRouter.post("/register", async (req, res) => {
   }
 });
 
-authRouter.post("/login", (req, res) => {
+userRouter.post("/login", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
   if (!password || !username) {
@@ -72,4 +71,4 @@ authRouter.post("/login", (req, res) => {
   });
 });
 
-module.exports = authRouter;
+module.exports = userRouter;
